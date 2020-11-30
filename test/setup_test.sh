@@ -1,4 +1,4 @@
-#!/bin/bash    
+#!/bin/bash
 
 # The goal of this script is to download data files hosted an a github repo.
 # The script has to work both on Linux and MacOS so we could not use some
@@ -6,8 +6,7 @@
 # necessary files via a temp folder.
 set -ex
 
-PROJECT_DIR=$(pwd)
-mkdir -p ${PROJECT_DIR}
+DISTILLER_DIR=$(pwd)
 
 TMPDATADIR=`mktemp -d 2>/dev/null || mktemp -d -t 'TMPDATADIR'`
 
@@ -18,7 +17,7 @@ if [[ ! "$TMPDATADIR" || ! -d "$TMPDATADIR" ]]; then
 fi
 
 # deletes the temp directory at exit
-function cleanup {      
+function cleanup {
     rm -rf "$TMPDATADIR"
     echo "Deleted temp directory $TMPDATADIR"
 }
@@ -27,11 +26,11 @@ trap cleanup EXIT
 
 
 cd ${TMPDATADIR}
-#curl -LkSs https://api.github.com/repos/mirnylab/distiller-test-data/tarball | tar -zxf - 
-wget -O - https://api.github.com/repos/mirnylab/distiller-test-data/tarball | tar xvz
+#curl -LkSs https://api.github.com/repos/open2c/distiller-test-data/tarball | tar -zxf - 
+wget -O - https://api.github.com/repos/open2c/distiller-test-data/tarball | tar xvz
 # cd to the first (and the only) folder that was extracted from the tarball
 cd $(ls -d */|head -n 1)
-mv -n ./genome ${PROJECT_DIR}
-mv -n ./fastq ${PROJECT_DIR}
+mv -n ./genome ${DISTILLER_DIR}/test
+mv -n ./fastq ${DISTILLER_DIR}/test
 
 cd ${PROJECT_DIR}
