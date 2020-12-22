@@ -62,3 +62,11 @@ $ bash setup_test.sh
 $ nextflow distiller.nf -params-file ./test/test_project.yml 
 ```
 
+### blah blah - this is a temporary branch
+### aws related stuff
+
+That's how one would launch this branch of distiller on awsbatch:
+```sh
+nextflow run -bucket-dir s3://nf_bucket/run_data -profile custom,docker,awsbatch --custom_config /full/path/realaws.config --aws_config /full/path/aws_credentials.config -params-file project.yml distiller.nf
+```
+
